@@ -14,12 +14,11 @@ import { formatDate, offsetISO } from "@/lib/format";
 
 type Row = SessionDTO & { recorded: number; present: number; expected: number };
 
-export function SessionsClient({ sessions, departments, defaultQrExpiry, openNew, statusFilter }: { sessions: Row[]; departments: string[]; defaultQrExpiry: number; openNew: boolean; statusFilter: string }) {
+export function SessionsClient({ sessions, departments, defaultQrExpiry, openNew, statusFilter, suggestedCode }: { sessions: Row[]; departments: string[]; defaultQrExpiry: number; openNew: boolean; statusFilter: string; suggestedCode: string }) {
   const [editing, setEditing] = useState<Partial<SessionDTO> | null>(openNew ? {} : null);
   const router = useRouter();
   const toast = useToast();
   const [pending, start] = useTransition();
-  const [suggestedCode] = useState(() => `TRN-${String(Date.now()).slice(-5)}`);
 
   const run = (fn: () => Promise<{ ok: boolean; message: string }>) =>
     start(async () => {

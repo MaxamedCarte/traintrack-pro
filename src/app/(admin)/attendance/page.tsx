@@ -3,7 +3,8 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { listAttendance, listSessions } from "@/lib/data";
 import { attendanceFilterFrom, flat, type RawParams } from "@/lib/filters";
-import { formatDate, formatDateTime, formatTime } from "@/lib/format";
+import { formatDate } from "@/lib/format";
+import { LocalTime } from "@/components/client/local-time";
 import { Avatar, Badge, Empty, PageHeading, Pagination, withParams } from "@/components/ui";
 import { SearchInput, SelectFilter } from "@/components/client/filter-bar";
 import { CorrectButton } from "./correct-button";
@@ -66,10 +67,10 @@ export default async function AttendancePage({ searchParams }: { searchParams: P
                       <td>{r.department}</td>
                       <td>{r.sessionTitle}</td>
                       <td>{formatDate(r.sessionDate)}</td>
-                      <td>{formatTime(r.checkIn)}</td>
+                      <td><LocalTime value={r.checkIn} /></td>
                       <td><Badge value={r.status} /></td>
                       <td>{r.method}</td>
-                      <td>{formatDateTime(r.updatedAt)}</td>
+                      <td><LocalTime value={r.updatedAt} mode="datetime" /></td>
                       <td><CorrectButton id={r.id} name={r.fullName} session={r.sessionTitle} status={r.status} /></td>
                     </tr>
                   ))}

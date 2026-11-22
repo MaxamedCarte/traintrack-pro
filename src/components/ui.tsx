@@ -5,7 +5,7 @@ export function Badge({ value }: { value: string }) {
   return <span className={`badge ${value.toLowerCase().replaceAll(" ", "-")}`}>{value}</span>;
 }
 
-export function PageHeading({ kicker, title, copy, actions }: { kicker: string; title: string; copy?: ReactNode; actions?: ReactNode }) {
+export function PageHeading({ kicker, title, copy, actions }: { kicker: ReactNode; title: ReactNode; copy?: ReactNode; actions?: ReactNode }) {
   return (
     <div className="page-heading">
       <div>

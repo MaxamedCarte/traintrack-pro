@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { getStaff, listAttendance } from "@/lib/data";
-import { formatDate, formatTime, percent } from "@/lib/format";
+import { formatDate, percent } from "@/lib/format";
+import { LocalTime } from "@/components/client/local-time";
 import { Badge, Empty, PageHeading } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Attendance history" };
@@ -41,10 +42,10 @@ export default async function StaffHistoryPage({ params }: { params: Promise<{ s
                   <tr key={r.id}>
                     <td><strong>{r.sessionTitle}</strong><br /><small className="muted">{r.sessionCode}</small></td>
                     <td>{formatDate(r.sessionDate)}</td>
-                    <td>{formatTime(r.checkIn)}</td>
+                    <td><LocalTime value={r.checkIn} /></td>
                     <td><Badge value={r.status} /></td>
                     <td>{r.method}</td>
-                    <td>{formatDate(r.updatedAt.slice(0, 10))} {formatTime(r.updatedAt)}</td>
+                    <td><LocalTime value={r.updatedAt} mode="datetime" /></td>
                   </tr>
                 ))}
               </tbody>

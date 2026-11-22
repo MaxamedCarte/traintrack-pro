@@ -30,7 +30,16 @@ export default async function SessionsPage({ searchParams }: { searchParams: Pro
   return (
     <>
       <PageHeading kicker="Learning calendar" title="Training sessions" copy="Schedule, publish, and monitor organization training" />
-      <SessionsClient sessions={rows} departments={departments} defaultQrExpiry={settings.defaultQrExpiryMinutes} openNew={params.new === "1"} statusFilter={params.status ?? "all"} />
+      <SessionsClient sessions={rows} departments={departments} defaultQrExpiry={settings.defaultQrExpiryMinutes} openNew={params.new === "1"} statusFilter={params.status ?? "all"} suggestedCode={nextSessionCode(sessions.map((x) => x.code))} />
     </>
   );
+}
+
+/** Suggests the next sequential TRN code, e.g. TRN-2405 → TRN-2406. */
+function nextSessionCode(codes: string[]) {
+  const max = codes.reduce((m, c) => {
+    const n = Number(/^TRN-(\d+)$/.exec(c)?.[1]);
+    return Number.isFinite(n) && n > m ? n : m;
+  }, 2400);
+  return `TRN-${max + 1}`;
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/auth";
 import { listAudit } from "@/lib/data";
-import { formatDateTime } from "@/lib/format";
+import { LocalTime } from "@/components/client/local-time";
 import { Empty, PageHeading, Pagination } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Audit logs" };
@@ -26,7 +26,7 @@ export default async function AuditPage({ searchParams }: { searchParams: Promis
                 <tbody>
                   {data.rows.map((r) => (
                     <tr key={r.id}>
-                      <td>{formatDateTime(r.createdAt)}</td>
+                      <td><LocalTime value={r.createdAt} mode="datetime" /></td>
                       <td><span className="badge live">{r.action}</span></td>
                       <td><strong>{r.summary || r.entityId}</strong><br /><small className="muted">{r.entity}{r.entityId ? ` · ${r.entityId}` : ""}</small></td>
                       <td className="audit-diff">{r.oldValue || r.newValue ? <><b>{r.oldValue || "—"}</b> → <b>{r.newValue || "—"}</b></> : "—"}</td>

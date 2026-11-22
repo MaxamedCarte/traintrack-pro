@@ -9,7 +9,8 @@ import { Modal } from "@/components/client/modal";
 import { useToast } from "@/components/client/toast";
 import { Avatar, Badge } from "@/components/ui";
 import type { AttendanceDTO, SessionDTO, StaffDTO } from "@/lib/data";
-import { formatDate, formatTime } from "@/lib/format";
+import { formatDate } from "@/lib/format";
+import { LocalTime } from "@/components/client/local-time";
 
 type RosterRow = StaffDTO & { record: AttendanceDTO | null };
 
@@ -156,7 +157,7 @@ export function QrClient({ origin, session, sessions, roster, expected, present,
                   <Avatar name={p.fullName} />
                   <div className="list-main">
                     <strong>{p.fullName}</strong>
-                    <small>{p.staffId} · {p.record?.checkIn ? `checked in ${formatTime(p.record.checkIn)}` : p.department}</small>
+                    <small>{p.staffId} · {p.record?.checkIn ? <>checked in <LocalTime value={p.record.checkIn} /></> : p.department}</small>
                   </div>
                   <div className="list-value">
                     {p.record ? <Badge value={p.record.status} /> : <button className="btn btn-sm" onClick={() => setManual(p)}>Record</button>}

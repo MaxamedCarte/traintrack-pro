@@ -2,16 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { dashboardStats, getSettings } from "@/lib/data";
-import { formatDate, formatTime, percent } from "@/lib/format";
+import { formatDate, percent } from "@/lib/format";
+import { LocalTime } from "@/components/client/local-time";
 import { Avatar, Badge, Empty, Kpi, PageHeading } from "@/components/ui";
 import { DepartmentChart, StatusChart, TrendChart } from "@/components/client/charts";
 
 export const metadata: Metadata = { title: "Overview" };
-
-function greeting() {
-  const h = new Date().getHours();
-  return h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-}
 
 export default async function OverviewPage() {
   const admin = await requireAdmin();
@@ -22,8 +18,8 @@ export default async function OverviewPage() {
   return (
     <>
       <PageHeading
-        kicker={new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
-        title={`${greeting()}, ${firstName}`}
+        kicker={<LocalTime mode="date-long" />}
+        title={<><LocalTime mode="greeting" />, {firstName}</>}
         copy={`Here is your attendance overview for ${settings.organization}.`}
         actions={
           <>
@@ -120,7 +116,7 @@ export default async function OverviewPage() {
                 <div className="list-main">
                   <strong>{r.fullName}</strong>
                   <small>
-                    {r.sessionTitle} · {formatTime(r.updatedAt)}
+                    {r.sessionTitle} · <LocalTime value={r.updatedAt} />
                   </small>
                 </div>
                 <div className="list-value">
