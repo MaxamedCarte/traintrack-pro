@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="TrainTrack Pro">
+  <rect width="48" height="48" rx="12" fill="#123d46"/>
+  <path d="M13 13h22v6H28v16h-8V19h-7z" fill="#e8f3ef"/>
+  <path d="M31 27a7 7 0 1 1-14 0" fill="none" stroke="#83c9b5" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="31" cy="27" r="3" fill="#83c9b5"/>
+</svg>
